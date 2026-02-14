@@ -13,7 +13,8 @@ export const generalLimiter = rateLimit({
   skip: (req) => {
     // Skip rate limiting for health check
     return req.path === "/";
-  }
+  },
+  validate: { xForwardedForHeader: false } // Don't validate X-Forwarded-For header since we trust proxy
 });
 
 /**
@@ -27,6 +28,7 @@ export const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: false, // Count all requests, not just failed ones
+  validate: { xForwardedForHeader: false } // Don't validate X-Forwarded-For header since we trust proxy
 });
 
 /**
@@ -39,6 +41,7 @@ export const uploadLimiter = rateLimit({
   message: "Too many file uploads, please try again later.",
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false } // Don't validate X-Forwarded-For header since we trust proxy
 });
 
 /**
@@ -51,4 +54,5 @@ export const aiLimiter = rateLimit({
   message: "Too many API requests to AI services, please try again later.",
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false } // Don't validate X-Forwarded-For header since we trust proxy
 });
