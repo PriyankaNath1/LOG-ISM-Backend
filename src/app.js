@@ -14,6 +14,10 @@ dotenv.config();
 
 const app = express();
 
+// Trust proxy headers (X-Forwarded-For, X-Forwarded-Proto) for accurate client IP identification
+// Important for rate limiting when behind a reverse proxy or load balancer
+app.set('trust proxy', 1);
+
 // Security middleware: Set HTTP headers to protect against common attacks
 app.use(helmet());
 
